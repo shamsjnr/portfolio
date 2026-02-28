@@ -5,599 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abdulazeez Nasir — Full-Stack Engineer</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #060810;
-      --surface: #0d1117;
-      --surface2: #161b27;
-      --border: #1e2736;
-      --accent: #00e5ff;
-      --accent2: #7b61ff;
-      --accent3: #ff6b6b;
-      --text: #e2e8f0;
-      --muted: #64748b;
-      --glow: 0 0 20px rgba(0,229,255,0.3);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      overflow-x: hidden;
-      cursor: none;
-    }
-
-    /* Custom Cursor */
-    .cursor {
-      width: 12px; height: 12px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s ease;
-      mix-blend-mode: difference;
-    }
-    .cursor-ring {
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9998;
-      transition: all 0.15s ease;
-      opacity: 0.6;
-    }
-
-    /* Grid background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Nav */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.2rem 4rem;
-      background: rgba(6,8,16,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-    }
-    .nav-logo span { color: var(--muted); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-links a:hover::after { width: 100%; }
-
-    /* Hero */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 8rem 4rem 4rem;
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    .hero-blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      pointer-events: none;
-      animation: float 8s ease-in-out infinite;
-    }
-    .hero-blob-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(0,229,255,0.1) 0%, transparent 70%);
-      top: -100px; right: -100px;
-    }
-    .hero-blob-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(123,97,255,0.08) 0%, transparent 70%);
-      bottom: 0; left: 10%;
-      animation-delay: -4s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-30px); }
-    }
-
-    .hero-inner { max-width: 900px; }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--accent);
-      border: 1px solid rgba(0,229,255,0.3);
-      padding: 0.4rem 1rem;
-      border-radius: 2px;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.3s;
-    }
-    .hero-tag::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    h1 {
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.2em;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.5s;
-    }
-    h1 .accent-word { color: var(--accent); }
-    h1 .accent-word2 { color: var(--accent2); }
-
-    .hero-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(0.85rem, 2vw, 1.1rem);
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.8;
-      margin-top: 1.5rem;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.7s;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.9s;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.85rem 2rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: all 0.25s ease;
-      cursor: none;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 700;
-    }
-    .btn-primary:hover {
-      background: #fff;
-      box-shadow: var(--glow);
-      transform: translateY(-2px);
-    }
-    .btn-ghost {
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 3rem;
-      margin-top: 5rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid var(--border);
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 1.1s;
-    }
-    .stat-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.3rem;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Sections */
-    section {
-      padding: 6rem 4rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 0.75rem;
-    }
-    .section-title {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 3rem;
-    }
-    .section-title span { color: var(--accent); }
-
-    /* About */
-    #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-      max-width: 1100px;
-    }
-    .about-text p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.9;
-      margin-bottom: 1.2rem;
-    }
-    .about-text p strong { color: var(--text); }
-    .about-card {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2rem;
-    }
-    .about-card-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      margin-bottom: 1.5rem;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .info-row:last-child { border-bottom: none; }
-    .info-key {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    .info-val {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
-      color: var(--text);
-    }
-    .status-dot {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: #4ade80;
-      font-size: 0.8rem;
-    }
-    .status-dot::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: #4ade80;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    /* Skills */
-    #skills { max-width: 1100px; margin: 0 auto; }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-    .skill-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1.5rem;
-      transition: border-color 0.3s, transform 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .skill-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .skill-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); }
-    .skill-card:hover::before { transform: scaleX(1); }
-    .skill-card-icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.8rem;
-    }
-    .skill-card-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.8rem;
-      letter-spacing: 0.02em;
-    }
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-    .skill-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--accent);
-      background: rgba(0,229,255,0.08);
-      border: 1px solid rgba(0,229,255,0.2);
-      padding: 0.25rem 0.6rem;
-      border-radius: 2px;
-    }
-
-    /* Projects */
-    #projects { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-      max-width: 1100px;
-    }
-    .project-card {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .project-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(0,229,255,0.04) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .project-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-5px); }
-    .project-card:hover::after { opacity: 1; }
-    .project-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--accent2);
-      letter-spacing: 0.15em;
-      margin-bottom: 1rem;
-    }
-    .project-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-      line-height: 1.3;
-    }
-    .project-desc {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-    }
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-    .project-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--accent2);
-      background: rgba(123,97,255,0.1);
-      border: 1px solid rgba(123,97,255,0.2);
-      padding: 0.25rem 0.6rem;
-      border-radius: 2px;
-    }
-
-    /* Experience */
-    #experience { max-width: 1100px; margin: 0 auto; }
-    .exp-list { display: flex; flex-direction: column; gap: 0; }
-    .exp-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 3rem;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-    .exp-item::before {
-      content: '';
-      position: absolute;
-      left: 190px; top: 0; bottom: 0;
-      width: 1px;
-      background: var(--border);
-    }
-    .exp-year {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-      padding-top: 0.2rem;
-    }
-    .exp-role { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .exp-company { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem; }
-    .exp-bullets {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .exp-bullets li {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.7;
-      padding-left: 1.2rem;
-      position: relative;
-    }
-    .exp-bullets li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-    }
-
-    /* Contact */
-    #contact {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-    .contact-inner { max-width: 600px; margin: 0 auto; }
-    .contact-inner p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    /* Footer */
-    footer {
-      padding: 2rem 4rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    footer p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-    }
-    footer span { color: var(--accent); }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* Terminal typing */
-    .typing {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--accent);
-      border-right: 2px solid var(--accent);
-      white-space: nowrap;
-      overflow: hidden;
-      animation: typing 3s steps(40) forwards, blink 0.8s step-end infinite;
-    }
-    @keyframes typing { from { width: 0 } to { width: 100% } }
-    @keyframes blink { 0%, 100% { border-color: var(--accent) } 50% { border-color: transparent } }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      #hero, section { padding: 5rem 1.5rem 3rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      .exp-item::before { display: none; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
-      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/base.css" />
 </head>
 <body>
-
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- Nav -->
   <nav>
     <div class="nav-logo">AZN<span>.dev</span></div>
     <ul class="nav-links">
@@ -609,235 +22,96 @@
     </ul>
   </nav>
 
-  <!-- Hero -->
   <section id="hero">
     <div class="hero-blob hero-blob-1"></div>
     <div class="hero-blob hero-blob-2"></div>
     <div class="hero-inner">
-      <div class="hero-tag">Available for remote work · GMT+1</div>
-      <h1>
-        Abdulazeez<br>
-        <span class="accent-word">Nasir</span><span style="color:var(--muted)">.</span>
-      </h1>
-      <div style="opacity:0;animation:fadeUp 0.7s ease forwards 0.6s;">
-        <div class="typing" style="max-width:420px;">Full-Stack Engineer · SaaS · AI Systems</div>
-      </div>
-      <p class="hero-sub">
-        Building production-grade SaaS platforms, AI-enabled apps, and scalable infrastructure. I turn ambitious product ideas into systems that run at scale — from architecture to deployment.
-      </p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">View My Work ↓</a>
-        <a href="mailto:abdulazeez.i.nasir@gmail.com" class="btn btn-ghost">Get in Touch →</a>
-      </div>
-      <div class="hero-stats">
-        <div>
-          <div class="stat-num">3+</div>
-          <div class="stat-label">Production SaaS Platforms</div>
+
+      <div class="hero-text">
+        <div class="hero-tag">Available for remote work · GMT+1</div>
+        <h1>Abdulazeez<br><span class="accent-word">Nasir</span><span style="color:var(--muted)">.</span></h1>
+        <div style="opacity:0;animation:fadeUp 0.7s ease forwards 0.6s;">
+          <div class="typing" style="max-width:420px;">Full-Stack Engineer · SaaS · AI Systems</div>
         </div>
-        <div>
-          <div class="stat-num">5+</div>
-          <div class="stat-label">Years Engineering</div>
+        <p class="hero-sub">Building production-grade SaaS platforms, AI-enabled apps, and scalable infrastructure. I turn ambitious product ideas into systems that run at scale — from architecture to deployment.</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">View My Work ↓</a>
+          <a href="mailto:abdulazeez.i.nasir@gmail.com" class="btn btn-ghost">Get in Touch →</a>
         </div>
-        <div>
-          <div class="stat-num">10+</div>
-          <div class="stat-label">Technologies Mastered</div>
-        </div>
-        <div>
-          <div class="stat-num">∞</div>
-          <div class="stat-label">Problems Solved</div>
+        <div class="hero-stats">
+          <div><div class="stat-num">3+</div><div class="stat-label">Production SaaS Platforms</div></div>
+          <div><div class="stat-num">7+</div><div class="stat-label">Years Engineering</div></div>
+          <div><div class="stat-num">10+</div><div class="stat-label">Technologies Mastered</div></div>
+          <div><div class="stat-num">∞</div><div class="stat-label">Problems Solved</div></div>
         </div>
       </div>
+      <img src="assets/photo.png" alt="Abdulazeez Nasir" class="hero-photo" />
     </div>
   </section>
 
-  <!-- About -->
   <section id="about">
     <div class="about-grid reveal">
       <div class="about-text">
         <div class="section-label">// about me</div>
         <h2 class="section-title">Product-Driven <span>Engineer</span></h2>
-        <p>
-          I'm a <strong>Full-Stack Engineer</strong> based in Nigeria (GMT+1), specializing in building and shipping subscription-based SaaS platforms, ERP systems, and AI-enabled applications that handle real users at scale.
-        </p>
-        <p>
-          My work spans the full stack — I'm equally comfortable designing <strong>backend architecture and billing workflows</strong> as I am building performant, polished frontends with React and Next.js.
-        </p>
-        <p>
-          I thrive in <strong>remote, async-first teams</strong> and I own features from technical design all the way through deployment, monitoring, and optimization. I don't just write code — I build systems that last.
-        </p>
+        <p>I'm a <strong>Full-Stack Engineer</strong> operating remotely (GMT+1), specializing in building and shipping subscription-based SaaS platforms, ERP systems, and AI-enabled applications that handle real users at scale.</p>
+        <p>My work spans the full stack — equally comfortable designing <strong>backend architecture and billing workflows</strong> as building performant, polished frontends with React and Next.js.</p>
+        <p>I thrive in <strong>remote, async-first teams</strong> and own features from technical design all the way through deployment, monitoring, and optimization. I don't just write code — I build systems that last.</p>
       </div>
       <div>
         <div class="about-card">
           <div class="about-card-title">// profile.json</div>
-          <div class="info-row">
-            <span class="info-key">Status</span>
-            <span class="status-dot">Open to work</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Location</span>
-            <span class="info-val">Nigeria · GMT+1</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Mode</span>
-            <span class="info-val">Remote-first</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Degree</span>
-            <span class="info-val">B.Eng Computer Engineering</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">University</span>
-            <span class="info-val">Ahmadu Bello University</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Email</span>
-            <span class="info-val" style="font-size:0.7rem;">abdulazeez.i.nasir@gmail.com</span>
-          </div>
+          <div class="info-row"><span class="info-key">Status</span><span class="status-dot">Open to work</span></div>
+          <div class="info-row"><span class="info-key">Timezone</span><span class="info-val">GMT+1</span></div>
+          <div class="info-row"><span class="info-key">Mode</span><span class="info-val">Remote-first</span></div>
+          <div class="info-row"><span class="info-key">Degree</span><span class="info-val">B.Eng Computer Engineering</span></div>
+          <div class="info-row"><span class="info-key">University</span><span class="info-val">Ahmadu Bello University</span></div>
+          <div class="info-row"><span class="info-key">Email</span><span class="info-val" style="font-size:0.7rem;">abdulazeez.i.nasir@gmail.com</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Skills -->
   <section id="skills">
     <div class="section-label">// technical expertise</div>
     <h2 class="section-title">What I <span>Build With</span></h2>
-    <div class="skills-grid reveal">
-      <div class="skill-card">
-        <div class="skill-card-icon">⚡</div>
-        <div class="skill-card-title">Languages</div>
-        <div class="skill-tags">
-          <span class="skill-tag">PHP</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">TypeScript</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">🔧</div>
-        <div class="skill-card-title">Backend</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Laravel</span>
-          <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">Express</span>
-          <span class="skill-tag">RESTful APIs</span>
-          <span class="skill-tag">Webhooks</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">🎨</div>
-        <div class="skill-card-title">Frontend</div>
-        <div class="skill-tags">
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">Next.js</span>
-          <span class="skill-tag">Vue</span>
-          <span class="skill-tag">SPA</span>
-          <span class="skill-tag">SSR</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">☁️</div>
-        <div class="skill-card-title">Infrastructure & Cloud</div>
-        <div class="skill-tags">
-          <span class="skill-tag">DigitalOcean</span>
-          <span class="skill-tag">AWS S3</span>
-          <span class="skill-tag">GitHub CI/CD</span>
-          <span class="skill-tag">Cloudflare</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">💳</div>
-        <div class="skill-card-title">Billing Architecture</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Stripe</span>
-          <span class="skill-tag">Chargebee</span>
-          <span class="skill-tag">Subscription Logic</span>
-          <span class="skill-tag">Webhook Validation</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">🗄️</div>
-        <div class="skill-card-title">Databases</div>
-        <div class="skill-tags">
-          <span class="skill-tag">MySQL</span>
-          <span class="skill-tag">PostgreSQL</span>
-          <span class="skill-tag">MongoDB</span>
-          <span class="skill-tag">Supabase</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">🤖</div>
-        <div class="skill-card-title">AI Systems</div>
-        <div class="skill-tags">
-          <span class="skill-tag">OpenAI API</span>
-          <span class="skill-tag">Claude API</span>
-          <span class="skill-tag">Async Processing</span>
-          <span class="skill-tag">AI Orchestration</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-icon">🏗️</div>
-        <div class="skill-card-title">Architecture</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Multi-Tenant SaaS</span>
-          <span class="skill-tag">Microservices</span>
-          <span class="skill-tag">Event-Driven</span>
-          <span class="skill-tag">Role-Based Access</span>
-        </div>
-      </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal"><div class="skill-card-icon">⚡</div><div class="skill-card-title">Languages</div><div class="skill-tags"><span class="skill-tag">PHP</span><span class="skill-tag">JavaScript</span><span class="skill-tag">TypeScript</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-icon">🔧</div><div class="skill-card-title">Backend</div><div class="skill-tags"><span class="skill-tag">Laravel</span><span class="skill-tag">Node.js</span><span class="skill-tag">Express</span><span class="skill-tag">RESTful APIs</span><span class="skill-tag">Webhooks</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-icon">🎨</div><div class="skill-card-title">Frontend</div><div class="skill-tags"><span class="skill-tag">React</span><span class="skill-tag">Next.js</span><span class="skill-tag">Vue</span><span class="skill-tag">SPA</span><span class="skill-tag">SSR</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-icon">☁️</div><div class="skill-card-title">Infrastructure & Cloud</div><div class="skill-tags"><span class="skill-tag">DigitalOcean</span><span class="skill-tag">AWS S3</span><span class="skill-tag">GitHub CI/CD</span><span class="skill-tag">Cloudflare</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-icon">💳</div><div class="skill-card-title">Billing Architecture</div><div class="skill-tags"><span class="skill-tag">Stripe</span><span class="skill-tag">Chargebee</span><span class="skill-tag">Paystack</span><span class="skill-tag">Remita</span><span class="skill-tag">Webhook Validation</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-icon">🗄️</div><div class="skill-card-title">Databases</div><div class="skill-tags"><span class="skill-tag">MySQL</span><span class="skill-tag">PostgreSQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">Supabase</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-icon">🤖</div><div class="skill-card-title">AI Systems</div><div class="skill-tags"><span class="skill-tag">OpenAI API</span><span class="skill-tag">Claude API</span><span class="skill-tag">Async Processing</span><span class="skill-tag">AI Orchestration</span></div></div>
+      <div class="skill-card reveal"><div class="skill-card-icon">🏗️</div><div class="skill-card-title">Architecture</div><div class="skill-tags"><span class="skill-tag">Multi-Tenant SaaS</span><span class="skill-tag">Microservices</span><span class="skill-tag">Event-Driven</span><span class="skill-tag">Role-Based Access</span></div></div>
     </div>
   </section>
 
-  <!-- Projects -->
   <section id="projects">
     <div class="section-label">// selected work</div>
     <h2 class="section-title">Things I've <span>Shipped</span></h2>
-    <div class="projects-grid reveal">
-      <div class="project-card">
+    <div class="projects-grid">
+      <div class="project-card reveal">
         <div class="project-num">PROJECT_01 · AI</div>
         <div class="project-title">AI SaaS Platform</div>
-        <div class="project-desc">
-          Token-based usage control system with an AI orchestration engine built on top of OpenAI and Claude APIs. Features async processing pipelines, usage metering, and subscription-gated access tiers.
-        </div>
-        <div class="project-tags">
-          <span class="project-tag">Laravel</span>
-          <span class="project-tag">OpenAI API</span>
-          <span class="project-tag">Claude API</span>
-          <span class="project-tag">Stripe</span>
-          <span class="project-tag">Queue Workers</span>
-        </div>
+        <div class="project-desc">Token-based usage control system with an AI orchestration engine built on top of OpenAI and Claude APIs. Features async processing pipelines, usage metering, and subscription-gated access tiers.</div>
+        <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">OpenAI API</span><span class="project-tag">Claude API</span><span class="project-tag">Stripe</span><span class="project-tag">Queue Workers</span></div>
       </div>
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-num">PROJECT_02 · AUTOMATION</div>
         <div class="project-title">Document Automation Platform</div>
-        <div class="project-desc">
-          Microservice-based document processing workflows with intelligent routing, transformation pipelines, and async job orchestration. Built for high-throughput document generation at scale.
-        </div>
-        <div class="project-tags">
-          <span class="project-tag">Node.js</span>
-          <span class="project-tag">Microservices</span>
-          <span class="project-tag">AWS S3</span>
-          <span class="project-tag">MongoDB</span>
-          <span class="project-tag">TypeScript</span>
-        </div>
+        <div class="project-desc">Microservice-based document processing workflows with intelligent routing, transformation pipelines, and async job orchestration. Built for high-throughput document generation at scale.</div>
+        <div class="project-tags"><span class="project-tag">Node.js</span><span class="project-tag">Microservices</span><span class="project-tag">AWS S3</span><span class="project-tag">MongoDB</span><span class="project-tag">TypeScript</span></div>
       </div>
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-num">PROJECT_03 · ENTERPRISE</div>
         <div class="project-title">Multi-Tenant ERP System</div>
-        <div class="project-desc">
-          Enterprise-grade ERP with granular role-based access control, advanced reporting dashboards, and isolated multi-tenant database architecture supporting dozens of organizations simultaneously.
-        </div>
-        <div class="project-tags">
-          <span class="project-tag">Laravel</span>
-          <span class="project-tag">React</span>
-          <span class="project-tag">Multi-Tenancy</span>
-          <span class="project-tag">MySQL</span>
-          <span class="project-tag">RBAC</span>
-        </div>
+        <div class="project-desc">Enterprise-grade ERP with granular role-based access control, advanced reporting dashboards, and isolated multi-tenant database architecture supporting dozens of organizations simultaneously.</div>
+        <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">React</span><span class="project-tag">Multi-Tenancy</span><span class="project-tag">MySQL</span><span class="project-tag">RBAC</span></div>
       </div>
     </div>
   </section>
 
-  <!-- Experience -->
   <section id="experience">
     <div class="section-label">// work history</div>
     <h2 class="section-title">Experience <span>Timeline</span></h2>
@@ -848,7 +122,7 @@
           <div class="exp-role">Full-Stack Engineer</div>
           <div class="exp-company">// Remote · Product-Driven SaaS Work</div>
           <ul class="exp-bullets">
-            <li>Designed and deployed production-grade SaaS platforms with subscription billing models using Stripe and Chargebee.</li>
+            <li>Designed and deployed production-grade SaaS platforms with subscription billing using Stripe, Paystack, and Chargebee.</li>
             <li>Implemented secure webhook validation behind reverse proxies in Cloudflare scenarios.</li>
             <li>Built multi-tenant database architectures for scalable SaaS products serving multiple organizations.</li>
             <li>Owned features end-to-end: from technical design through deployment and ongoing monitoring.</li>
@@ -880,88 +154,57 @@
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
     <div class="contact-inner reveal">
       <div class="section-label">// let's connect</div>
       <h2 class="section-title">Got a project in <span>mind?</span></h2>
-      <p>
-        I'm open to interesting remote opportunities, freelance projects, and collaborations. Whether it's a SaaS platform, an AI-powered tool, or complex backend architecture — let's build something great.
-      </p>
+      <p>I'm open to interesting remote opportunities, freelance projects, and collaborations. Whether it's a SaaS platform, an AI-powered tool, or complex backend architecture — let's build something great.</p>
       <div class="contact-links">
-        <a href="mailto:abdulazeez.i.nasir@gmail.com" class="btn btn-primary">
-          ✉ Send Email
-        </a>
-        <a href="https://linkedin.com/in/abdulazeez-nasir" target="_blank" class="btn btn-ghost">
-          LinkedIn →
-        </a>
-        <a href="https://github.com/abdulazeez-nasir" target="_blank" class="btn btn-ghost">
-          GitHub →
-        </a>
+        <a href="mailto:abdulazeez.i.nasir@gmail.com" class="btn btn-primary">✉ Send Email</a>
+        <a href="https://www.linkedin.com/in/abdulazeez-nasir-8312a862" target="_blank" class="btn btn-ghost">LinkedIn →</a>
+        <a href="https://github.com/shamsjnr" target="_blank" class="btn btn-ghost">GitHub →</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <p>© 2025 <span>Abdulazeez Nasir</span>. Built with raw HTML — no frameworks needed.</p>
-    <p>GMT+1 · Nigeria · <span>Open to Remote</span></p>
+    <p>© <span id="currentYear"></span> <span>Abdulazeez Nasir</span>. Built with raw HTML — no frameworks needed.</p>
+    <p>GMT+1 · <span>Open to Remote</span></p>
   </footer>
 
   <script>
-    // Custom cursor
+    // Current year
+    const currentYear = new Date().getFullYear();
+    document.getElementById('currentYear').textContent = currentYear;
+
+    // Cursor
     const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      cursor.style.left = mouseX - 6 + 'px';
-      cursor.style.top = mouseY - 6 + 'px';
+    const ring   = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = (mx - 6) + 'px';
+      cursor.style.top  = (my - 6) + 'px';
+    });
+    (function animRing() {
+      rx += (mx - rx - 18) * 0.12;
+      ry += (my - ry - 18) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a, button, label').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; ring.style.opacity = '1'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; ring.style.opacity = '0.6'; });
     });
 
-    function animateRing() {
-      ringX += (mouseX - ringX - 18) * 0.12;
-      ringY += (mouseY - ringY - 18) * 0.12;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'scale(2)';
-        ring.style.transform = 'scale(1.5)';
-        ring.style.opacity = '1';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'scale(1)';
-        ring.style.transform = 'scale(1)';
-        ring.style.opacity = '0.6';
-      });
-    });
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Stagger skill cards
-    document.querySelectorAll('.skill-card').forEach((card, i) => {
-      card.style.transitionDelay = `${i * 0.07}s`;
-      card.classList.add('reveal');
-      observer.observe(card);
-    });
-
-    document.querySelectorAll('.project-card').forEach((card, i) => {
-      card.style.transitionDelay = `${i * 0.1}s`;
-      card.classList.add('reveal');
-      observer.observe(card);
+    // Scroll reveal with stagger
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.06) + 's';
+      obs.observe(el);
     });
   </script>
 </body>
