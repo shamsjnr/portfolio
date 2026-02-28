@@ -126,10 +126,7 @@ footer span { color: var(--accent); }
     .nav-links { display: none; }
     #hero { padding: 6rem 1.5rem 4rem; }
     section { padding: 4rem 1.5rem 3rem; }
-    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .hero-photo-wrap { display: flex; justify-content: center; order: -1; margin-top: 0; }
-    .hero-photo-frame { width: 180px; height: 220px; }
-    .photo-upload-hint { bottom: -22px; }
+    .hero-photo { display: none; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
     .exp-item::before { display: none; }
